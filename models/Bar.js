@@ -21,6 +21,14 @@ const Bar = db.define('Bar', {
     type: DataTypes.STRING,
     allowNull: false
   },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  token: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
   description: {
     type: DataTypes.TEXT,
     allowNull: true

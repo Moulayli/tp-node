@@ -5,6 +5,25 @@ const Biere = require("../models/Biere");
 const controller = {}
 const Bar = require('../models/Bar');
 
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken')
+
+controller.login = async (req, res) => {
+  if (!req.form.isValid) {
+    return res.status(400).send({ message: "Invalid body" })
+  }
+  const { email, password } = req.form;
+  
+  Bar.findOne({ where: {email} })
+  .then( async (bar) => {
+    if (!bar || !bcrypt.compareSync(password, bar.password)) {
+      return res.status(401).json({ message : 'Invalid credentiels' })
+    }
+
+    res.status(200).json({ id: bar.id, token: bar.token })
+  })
+}
+
 controller.getAll = (req, res) => {
   Bar.findAll().then((bars) => {
     res.status(200).send(bars)
@@ -29,16 +48,33 @@ controller.getById = (req, res) => {
 }
 
 controller.create = (req, res) => {
-  const { name, adresse, tel, email, description } = req.body
-  const bar = {name, adresse, tel, email, description}
+  if (!req.form.isValid) {
+    return res.status(400).json({ message: "Invalid body", errors: req.form.errors });
+  }
+  const { name, adresse, tel, email, description, password } = req.form
 
-  Bar.create(bar)
-  .then( (b) => {
-    return res.status(201).send({bar : b, message: "Bar created"})
-  } )
-  .catch( (err) => {
-    return res.status(400).send({message: "Error creating Bar", error : err.errors})
-  })
+  Bar.findOne({ where: {email}})
+    .then(async (bar) => {
+      if (bar) {
+        return res.status(409).json({ message: 'Bar already exists !' })
+      }
+
+      const hashed = await bcrypt.hash(password, 10);
+      
+      Bar.create({ 
+        name: name,
+        adresse: adresse,
+        tel: tel,
+        description: description,        
+        email: email, 
+        password: hashed 
+      })
+      .then(async (bar) => {
+        bar.token = jwt.sign(bar.id, process.env.JWT_SECRET)
+        await bar.save();
+        return res.json({ id: bar.id, token: bar.token })
+      })
+    })
 }
 
 controller.update = (req, res) => {
