@@ -9,5 +9,6 @@ router.get("/commande/:id_commande", controller.getById)
 router.post("/bars/:id_bar/commande", ensureAuthorized, controller.addToBar)
 router.put("/commande/:id_commande", ensureAuthorized, controller.update)
 router.delete("/commande/:id_commande", ensureAuthorized, controller.delete)
+router.get('/commande/details/:id_commande', controller.generateCommandePDF);
 
 module.exports = router
