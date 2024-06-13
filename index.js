@@ -4,6 +4,9 @@ require("dotenv").config()
 const app = express()
 
 const Bar = require("./models/Bar");
+const Biere = require("./models/Biere");
+const Commande = require("./models/Commande");
+const Biere_Commande = require("./models/Biere_Commande");
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
