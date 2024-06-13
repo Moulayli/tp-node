@@ -5,17 +5,19 @@ const Biere_Commande = db.define('Biere_Commande', {
   biere_id: {
     type: sequelize.INTEGER,
     references: {
-      model: 'Bieres',
+      model: 'Biere',
       key: 'id'
     }
   },
   commande_id: {
     type: sequelize.INTEGER,
     references: {
-      model: 'Commandes',
+      model: 'Commande',
       key: 'id'
     }
   }
+}, {  
+  freezeTableName: true,
 });
 
 module.exports = Biere_Commande;

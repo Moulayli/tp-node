@@ -8,8 +8,10 @@ app.use(bodyParser.json())
 
 const barRouter = require("./router/barRouter")
 const biereRouter = require("./router/biereRouter")
+const commandeRouter = require("./router/commandeRouter")
 app.use(barRouter);
 app.use(biereRouter);
+app.use(commandeRouter);
 
 app.listen(process.env.SERVER_PORT, () => {
   console.log(`app listening on port ${process.env.SERVER_PORT}`)

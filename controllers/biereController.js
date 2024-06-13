@@ -30,16 +30,16 @@ controller.getAllOfBar = (req, res) => {
 controller.getById = (req, res) => {
   const id_biere = req.params.id_biere
   Biere.findByPk(id_biere)
-  .then((biere) => {
-    if (!biere) {
-      return res.status(404).json({ message: 'Beer not found' });
-    }
-    res.status(200).json(biere);
-  })
-  .catch((err) => {
-    console.error('Error retrieving beer:', err);
-    res.status(500).json({ message: 'Internal server error' });
-  });
+    .then((biere) => {
+      if (!biere) {
+        return res.status(404).json({ message: 'Beer not found' });
+      }
+      res.status(200).json(biere);
+    })
+    .catch((err) => {
+      console.error('Error retrieving beer:', err);
+      res.status(500).json({ message: 'Internal server error' });
+    });
 }
 
 controller.addToBar = (req, res) => {

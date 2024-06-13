@@ -1,6 +1,5 @@
 const controller = {}
 const Bar = require('../models/Bar');
-const bars = [];
 
 controller.getAll = (req, res) => {
   Bar.findAll().then((bars) => {
