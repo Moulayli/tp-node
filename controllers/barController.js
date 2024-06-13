@@ -11,8 +11,8 @@ controller.getAll = (req, res) => {
 }
 
 controller.getById = (req, res) => {
-  const id = req.params.id
-  Bar.findByPk(id)
+  const id_bar = req.params.id_bar
+  Bar.findByPk(id_bar)
   .then((bar) => {
     if (!bar) {
       return res.status(404).json({ message: 'Bar not found' });
@@ -39,11 +39,11 @@ controller.create = (req, res) => {
 }
 
 controller.update = (req, res) => {
-  const id = req.params.id
+  const id_bar = req.params.id_bar
   const { name, adresse, tel, email, description } = req.body
   const bar = {name, adresse, tel, email, description}
 
-  Bar.update(bar, { where : { id : id}}).then( (queryResult) => {
+  Bar.update(bar, {where: {id: id_bar}}).then( (queryResult) => {
     res.status(200).send({message: "Bar updated" , result : queryResult })
   }).catch( (error) => {
     res.status(400).send({message : "Bar not updated", error})
@@ -51,9 +51,9 @@ controller.update = (req, res) => {
 }
 
 controller.delete = (req, res) => {
-  const id = req.params.id
+  const id_bar = req.params.id_bar
 
-  Bar.destroy({ where : { id : id}}).then((queryResult) => {
+  Bar.destroy({where: {id: id_bar}}).then((queryResult) => {
     if (queryResult === 0) return res.status(400).send('Bar not found')
       
     res.status(200).send({message : "Bar deleted !", result : queryResult})
