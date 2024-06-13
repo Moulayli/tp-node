@@ -3,10 +3,10 @@ const controller = require("../controllers/biereController")
 const express = require('express')
 const router = express.Router()
 
-router.get("/bar", controller.getAll)
-router.get("/bar/:id", controller.getById)
-router.post("/bar", controller.create)
-router.put("/bar/:id", controller.update)
-router.delete("/bar/:id", controller.delete)
+router.get("/bars/:id_bar/biere", controller.getAllOfBar)
+router.get("/biere/:id_biere", controller.getById)
+router.post("/bars/:id_bar", controller.addToBar)
+router.put("/biere/:id_biere", controller.update)
+router.delete("/biere/:id_biere", controller.delete)
 
 module.exports = router

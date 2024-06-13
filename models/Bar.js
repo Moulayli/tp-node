@@ -1,29 +1,32 @@
-const sequelize = require("sequelize")
+const { DataTypes } = require("sequelize")
 const db = require("../config/db")
+const Biere = require("./Biere")
 
 const Bar = db.define('Bar', {
-  id: { type: sequelize.INTEGER, primaryKey: true, autoIncrement: true},
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
   name: {
-    type: sequelize.STRING,
+    type: DataTypes.STRING,
     unique: true,
     allowNull: false,
   },
   adresse: {
-    type: sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false
   },
   tel: {
-    type: sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: true
   },
   email: {
-    type: sequelize.STRING,
+    type: DataTypes.STRING,
     allowNull: false
   },
   description: {
-    type: sequelize.TEXT,
+    type: DataTypes.TEXT,
     allowNull: true
   }
+}, {  
+  freezeTableName: true,
 })
 
 module.exports = Bar
